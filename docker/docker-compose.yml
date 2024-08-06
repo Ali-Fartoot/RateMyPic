@@ -11,6 +11,8 @@ services:
       - pgdb
     env_file:
       - .env
+    networks:
+      - app_network
 
   pgdb:
     image: postgres
@@ -19,6 +21,8 @@ services:
       - ./db_data:/var/lib/postgresql/data 
     env_file:
       - .env
+    networks:
+      - app_network
 
   pgadmin:
     image: dpage/pgadmin4
@@ -31,7 +35,40 @@ services:
       - pgadmin-data:/var/lib/pgadmin
     env_file:
       - .env
+    networks:
+      - app_network
+
+  ofelia:
+    image: mcuadros/ofelia:latest
+    depends_on:
+      - scraper
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:r
+    networks:
+      - app_network
+
+  scraper:
+    image: scraper
+    container_name: scraper
+    user: user
+    build:
+      context: ../Crawler
+      dockerfile: Dockerfile
+    depends_on:
+      - pgdb
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.scraper.schedule: "@every 2m"
+      ofelia.job-exec.scraper.command: "python crawler.py"
+    networks:
+      - app_network
 
 volumes:
   db_data:
   pgadmin-data:
+
+networks:
+  app_network:
+    driver: bridge
+
