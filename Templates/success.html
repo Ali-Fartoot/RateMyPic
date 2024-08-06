@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Successful</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 40px 0;
+            background: #EBF0F5;
+        }
+        .card {
+            background: white;
+            padding: 60px;
+            border-radius: 4px;
+            box-shadow: 0 2px 3px #C8D0D8;
+            display: inline-block;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #88B04B;
+            font-weight: 900;
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #404F5E;
+            font-size: 20px;
+            margin: 0;
+        }
+        i {
+            color: #9ABC66;
+            font-size: 100px;
+            line-height: 200px;
+            margin-left: -15px;
+        }
+        #countdown {
+            font-size: 18px;
+            color: #666;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+            <i>✓</i>
+        </div>
+        <h1>Success</h1>
+        <p>Your image has been uploaded successfully!</p>
+        <p id="countdown">Redirecting to home page in 10 seconds...</p>
+    </div>
+
+    <script>
+        // Countdown timer and redirect
+        var seconds = 10;
+        var countdownElement = document.getElementById('countdown');
+        
+        function updateCountdown() {
+            countdownElement.textContent = `Redirecting to home page in ${seconds} seconds...`;
+            if (seconds > 0) {
+                seconds--;
+                setTimeout(updateCountdown, 1000);
+            } else {
+                window.location.href = "{{ home_url }}";
+            }
+        }
+
+        updateCountdown();
+    </script>
+</body>
+</html>

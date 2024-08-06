@@ -1,30 +1,37 @@
-version: '3.9'
 services:
-    django:
-        build: .
-        container_name: django
-        command: /usr/src/app/docker/start.sh
-        volumes:
-          - ../:/usr/src/app
-        ports:
-          - 8000:8000
-        depends_on:
-          - pgdb
-  
-    pgdb:
-        image: postgres
-        container_name: pgdb
-        volumes:
-            - ../db_data:/var/lib/postgresql/data 
-        environment:
-            POSTGRES_DB: "postgres"
-            POSTGRES_USER: "postgres"
-            POSTGRES_PASSWORD: "postgres"
+  django:
+    build: .
+    container_name: django
+    command: /usr/src/app/docker/start.sh
+    volumes:
+      - ../:/usr/src/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - pgdb
+    env_file:
+      - .env
+
+  pgdb:
+    image: postgres
+    container_name: pgdb
+    volumes:
+      - ./db_data:/var/lib/postgresql/data 
+    env_file:
+      - .env
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    ports:
+      - 8080:80
+    depends_on:
+      - pgdb
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    env_file:
+      - .env
 
 volumes:
   db_data:
-     external: true 
-
-# docker compose run django django-admin startproject RateMyPic .
-# docker compose up
-# docker compose up -d --build --> changing the new features
+  pgadmin-data:

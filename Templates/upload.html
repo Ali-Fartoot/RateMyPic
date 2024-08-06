@@ -1,0 +1,114 @@
+{% block content %}
+<style>
+    .upload-form {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .upload-form h2 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #555;
+    }
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    .form-text {
+        font-size: 14px;
+        color: #6c757d;
+        margin-top: 5px;
+    }
+    .text-danger {
+        color: #dc3545;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="upload-form">
+    <h2>Upload Image and Metadata</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="{{ form.image.id_for_label }}">Image:</label>
+            {{ form.image }}
+            {% if form.image.errors %}
+            <small class="form-text text-danger">{{ form.image.errors }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.publisher_id.id_for_label }}">Publisher ID:</label>
+            {{ form.publisher_id }}
+            <small class="form-text">{{ form.publisher_id.help_text }}</small>
+            {% if form.publisher_id.errors %}
+            <small class="form-text text-danger">{{ form.publisher_id.errors }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.published_date.id_for_label }}">Published Date:</label>
+            {{ form.published_date }}
+            {% if form.published_date.errors %}
+            <small class="form-text text-danger">{{ form.published_date.errors }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.liked_count.id_for_label }}">Liked Count:</label>
+            {{ form.liked_count }}
+            <small class="form-text">{{ form.liked_count.help_text }}</small>
+            {% if form.liked_count.errors %}
+            <small class="form-text text-danger">{{ form.liked_count.errors }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.disliked_count.id_for_label }}">Disliked Count:</label>
+            {{ form.disliked_count }}
+            <small class="form-text">{{ form.disliked_count.help_text }}</small>
+            {% if form.disliked_count.errors %}
+            <small class="form-text text-danger">{{ form.disliked_count.errors }}</small>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
