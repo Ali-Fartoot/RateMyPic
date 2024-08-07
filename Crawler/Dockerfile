@@ -4,7 +4,10 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /usr/src/app
 COPY crawler.py .
 COPY poster.py .
-COPY requirements.txt ./
+COPY requirements.txt .
+COPY entrypoint.sh /usr/src/app/entrypoint.sh
+RUN chmod +x /usr/src/app/entrypoint.sh
+
 RUN pip install -r requirements.txt
 
 RUN groupadd --gid 1000 user && \
@@ -12,5 +15,5 @@ RUN groupadd --gid 1000 user && \
 
 RUN chown -R "1000:1000" /home/user
 USER user
-
-CMD tail -f /dev/null
+    
+CMD ["/usr/src/app/entrypoint.sh"]

@@ -1,5 +1,8 @@
 import requests
 import json
+import os
+
+
 
 def post_data(data):
     api_url = "http://172.21.0.5:8000/api/post/"
@@ -17,9 +20,5 @@ def post_data(data):
         
 def download_image(url, save_path):
     response = requests.get(url)
-    if response.status_code == 200:
-        with open(save_path, 'wb') as file:
-            file.write(response.content)
-        print(f"Downloaded {url}")
-    else:
-        print(f"Failed to download {url}")
+    with open(save_path, 'wb') as file:
+        file.write(response.content)
