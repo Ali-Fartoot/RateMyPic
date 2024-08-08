@@ -13,7 +13,7 @@ services:
       - .env
     networks:
       mynetwork:
-         ipv4_address: 172.21.0.5
+        ipv4_address: 192.168.0.5
 
   pgdb:
     image: postgres
@@ -23,7 +23,8 @@ services:
     env_file:
       - .env
     networks:
-      - mynetwork
+      mynetwork:
+        ipv4_address: 192.168.0.6
 
   pgadmin:
     image: dpage/pgadmin4
@@ -37,7 +38,8 @@ services:
     env_file:
       - .env
     networks:
-      - mynetwork
+      mynetwork:
+        ipv4_address: 192.168.0.7
 
   ofelia:
     image: mcuadros/ofelia:latest
@@ -46,7 +48,9 @@ services:
     command: daemon --docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:r
-
+    networks:
+      mynetwork:
+        ipv4_address: 192.168.0.8
 
   scraper:
     image: scraper
@@ -59,24 +63,22 @@ services:
       - pgdb
     labels:
       ofelia.enabled: "true"
-      ofelia.job-exec.scraper.schedule: "@every 1m"
+      ofelia.job-exec.scraper.schedule: "@every 5m"
       ofelia.job-exec.scraper.command: "python crawler.py"
-    
     volumes:
       - ../Images:/usr/src/app/cache_images 
     networks: 
-      - mynetwork
+      mynetwork:
+        ipv4_address: 192.168.0.9
 
 volumes:
   db_data:
   pgadmin-data:
-
 
 networks:
   mynetwork:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.21.0.0/16
-
-
+        - subnet: 192.168.0.0/24
+          gateway: 192.168.0.1

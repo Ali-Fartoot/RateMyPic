@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,8 +22,14 @@
             background-color: #f0f0f0; /* Light gray background for images */
         }
     </style>
+    <script src="{% static 'like_handle/js/like_handler.js' %}"></script>
+
 </head>
 <body class="bg-gray-100">
+    {% load static %}
+
+    <script src="{% static 'like_handle/js/like_handler.js' %}"></script>
+
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold mb-8 text-center text-gray-800">Waifu Gallery</h1>
         
@@ -101,5 +108,7 @@
             </nav>
         </div>
     </div>
+
+
 </body>
 </html>

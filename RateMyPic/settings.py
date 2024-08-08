@@ -36,6 +36,9 @@ ALLOWED_HOSTS = ["*"]
 MEDIA_URL = '/Images/'
 MEDIA_ROOT = BASE_DIR / "Images"
 
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
 # Application definition
 
 INSTALLED_APPS = [

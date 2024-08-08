@@ -7,6 +7,8 @@ from PIL import Image
 import io
 import base64
 from django.db.models import F
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 def image_gallery(request):
     # Get the sorting parameter from the request
@@ -56,3 +58,18 @@ def image_gallery(request):
     }
     
     return render(request, 'gallery.html', context)
+
+
+@require_POST
+def like_image(request, image_id):
+    image = MetaData.objects.get(id=image_id)
+    image.liked_count += 1
+    image.save()
+    return JsonResponse({'liked_count': image.liked_count})
+
+@require_POST
+def dislike_image(request, image_id):
+    image = MetaData.objects.get(id=image_id)
+    image.disliked_count += 1
+    image.save()
+    return JsonResponse({'disliked_count': image.disliked_count})

@@ -7,7 +7,7 @@ from datetime import datetime
 import pytz
 from datetime import date, datetime
 from urllib.parse import urlparse
-
+from poster import download_image, post_data
 
 url = "https://www.waifu.im/search/?included_tags=waifu"
 response = requests.get(url)
@@ -17,7 +17,7 @@ script_tags = soup.find_all()
 img_urls = re.findall(r'https://cdn\.waifu\.im/\d+\.(?:jpg|jpeg|png)', str(script_tags))
 
 
-
+save_path = os.path.join(os.getcwd(), "cache_images")
 for img_url in img_urls:
     filename = os.path.basename(urlparse(img_url).path)
 
@@ -28,8 +28,11 @@ for img_url in img_urls:
         "liked_count": 0,
         "disliked_count": 0
     }
-
-    response = poster.post_data(data)
-    if response: 
-        poster.download_image(img_url, os.path.join(os.getcwd(), "cache_images")
-)
+    if download_image(img_url, save_path):
+        print("Image downloaded successfully")
+        if post_data(data):
+            print("Data posted successfully")
+        else:
+            print("Failed to post data")
+    else:
+        print("Failed to download image")
