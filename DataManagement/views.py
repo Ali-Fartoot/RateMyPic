@@ -16,13 +16,13 @@ def upload_image(request):
             
             if image:
                 image_name, hashed_image_id = hash_image(image)
-                
+                print(image_name)
                 image_path = os.path.join('Images', image_name)
                 path = default_storage.save(image_path, ContentFile(image.read()))
                 
                 metadata = form.save(commit=False)
-                metadata.hashed_image_id = hashed_image_id
-                
+                metadata.hashed_image_id = image_name
+
                 try:
                     metadata.save()
                     return redirect('/upload/success/')

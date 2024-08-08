@@ -33,6 +33,9 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 
+MEDIA_URL = '/Images/'
+MEDIA_ROOT = BASE_DIR / "Images"
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'DataManagement',
     'Home',
+    'gallery',
 ]
 
 MIDDLEWARE = [
