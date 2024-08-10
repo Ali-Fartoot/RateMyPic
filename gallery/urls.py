@@ -2,7 +2,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('like_image/<int:image_id>/', views.like_image, name='like_image'),
-    path('dislike_image/<int:image_id>/', views.dislike_image, name='dislike_image'),
-    path('', views.image_gallery, name='image_gallery'),
+    path('', views.image_gallery, name='gallery'),
+    path('like_image/<str:image_id>/', views.like_image, name='like_image'),
+    path('dislike_image/<str:image_id>/', views.dislike_image, name='dislike_image'),
+
 ]
+

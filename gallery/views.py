@@ -62,14 +62,20 @@ def image_gallery(request):
 
 @require_POST
 def like_image(request, image_id):
-    image = MetaData.objects.get(id=image_id)
-    image.liked_count += 1
-    image.save()
-    return JsonResponse({'liked_count': image.liked_count})
+    try:
+        image = MetaData.objects.get(hashed_image_id=image_id)
+        image.liked_count += 1
+        image.save()
+        return JsonResponse({'liked_count': image.liked_count})
+    except MetaData.DoesNotExist:
+        return JsonResponse({'error': 'Image not found'}, status=404)
 
 @require_POST
 def dislike_image(request, image_id):
-    image = MetaData.objects.get(id=image_id)
-    image.disliked_count += 1
-    image.save()
-    return JsonResponse({'disliked_count': image.disliked_count})
+    try:
+        image = MetaData.objects.get(hashed_image_id=image_id)
+        image.disliked_count += 1
+        image.save()
+        return JsonResponse({'disliked_count': image.disliked_count})
+    except MetaData.DoesNotExist:
+        return JsonResponse({'error': 'Image not found'}, status=404)

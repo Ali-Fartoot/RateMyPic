@@ -63,7 +63,7 @@ services:
       - pgdb
     labels:
       ofelia.enabled: "true"
-      ofelia.job-exec.scraper.schedule: "@every 5m"
+      ofelia.job-exec.scraper.schedule: "@every 1m"
       ofelia.job-exec.scraper.command: "python crawler.py"
     volumes:
       - ../Images:/usr/src/app/cache_images 

@@ -16,8 +16,8 @@ def upload_image(request):
             
             if image:
                 image_name, hashed_image_id = hash_image(image)
-                print(image_name)
-                image_path = os.path.join('Images', image_name)
+                image_path = os.path.join(image_name)
+                print(image_path)
                 path = default_storage.save(image_path, ContentFile(image.read()))
                 
                 metadata = form.save(commit=False)

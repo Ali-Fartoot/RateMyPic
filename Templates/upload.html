@@ -82,33 +82,9 @@
             {% endif %}
         </div>
 
-        <div class="form-group">
-            <label for="{{ form.published_date.id_for_label }}">Published Date:</label>
-            {{ form.published_date }}
-            {% if form.published_date.errors %}
-            <small class="form-text text-danger">{{ form.published_date.errors }}</small>
-            {% endif %}
-        </div>
+        <!-- Hidden fields for liked_count and disliked_count will be rendered automatically -->
 
-        <div class="form-group">
-            <label for="{{ form.liked_count.id_for_label }}">Liked Count:</label>
-            {{ form.liked_count }}
-            <small class="form-text">{{ form.liked_count.help_text }}</small>
-            {% if form.liked_count.errors %}
-            <small class="form-text text-danger">{{ form.liked_count.errors }}</small>
-            {% endif %}
-        </div>
-
-        <div class="form-group">
-            <label for="{{ form.disliked_count.id_for_label }}">Disliked Count:</label>
-            {{ form.disliked_count }}
-            <small class="form-text">{{ form.disliked_count.help_text }}</small>
-            {% if form.disliked_count.errors %}
-            <small class="form-text text-danger">{{ form.disliked_count.errors }}</small>
-            {% endif %}
-        </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn-primary">Submit</button>
     </form>
 </div>
 {% endblock %}
